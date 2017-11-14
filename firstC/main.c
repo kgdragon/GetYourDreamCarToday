@@ -5,11 +5,13 @@
 #include<stdlib.h>
 #include <unistd.h>
 
+
 int checkIfUserIsApprovedForLoan();
-void delay(int numberOfSeconds);
+
 int main() {
     
     checkIfUserIsApprovedForLoan();
+    
 }
 
 
@@ -22,7 +24,14 @@ int checkIfUserIsApprovedForLoan() {
     printf("Please enter your credit score to see if you are approved for the loan\n");
     scanf("%d", &creditScore);
     
-   
+    printf("Checking..\n");
+    usleep(1000000);
+    printf("...\n");
+    usleep(1000000);
+    printf("....\n");
+    usleep(1000000);
+    printf(".....\n");
+    usleep(1000000);
 
         if (creditScore >= arrayCredit[3]) {
             printf("Fantastic, you have been approved for Execellent credit score");
