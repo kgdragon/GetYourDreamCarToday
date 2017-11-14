@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		40E5AE061F5468020094A5CA /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 40E5AE051F5468020094A5CA /* main.c */; };
+		40A087D71FA8016100B6F7D4 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 40E5AE051F5468020094A5CA /* main.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -119,7 +119,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				40E5AE061F5468020094A5CA /* main.c in Sources */,
+				40A087D71FA8016100B6F7D4 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,6 +248,7 @@
 				40E5AE0B1F5468020094A5CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
