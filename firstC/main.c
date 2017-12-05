@@ -5,7 +5,7 @@
 #include<stdlib.h>
 #include <unistd.h>
 #include <math.h>
-
+#include <string.h>
 int checkIfUserIsApprovedForLoan(int iD);
 
 struct CarInventory {
@@ -15,14 +15,21 @@ struct CarInventory {
     int uID;
     
 };
-
+void signIn(char *password, char *name);
+void singUp(char *, char *);
 void addCar(struct CarInventory *car);
 void calculatePayment(int creditScore, double downPayment, int month, double carPrice);
 
 int main() {
     
     int carID = 0;
-   
+    char userName[32];
+    char password[32];
+    
+    singUp(&password, &userName);
+
+    
+    signIn(&password, &userName);
     struct CarInventory car;
     
     strcpy(car.carMake, "Toyota");
@@ -44,6 +51,65 @@ void addCar(struct CarInventory *car) {
     
     
 }
+
+//singIn
+void signIn(char *password, char *name) {
+    printf("===================================\n");
+    printf("Please Sign In!\n");
+    char name1[32];
+    char pass1[32];
+    printf("Username: \n");
+    scanf("%s", name1);
+    printf("Password \n");
+    scanf("%s", pass1);
+    
+    
+    if ((strcmp(name1,name)==0) && strcmp(password,pass1)==0) {
+        printf("Welcome: %s\n", name);
+    } else {
+        printf("wrong password or username \n");
+        signIn(password, name);
+    }
+    
+}
+
+//SignUp
+void singUp(char *password, char *name) {
+    int len;
+    int trackUpper=0;
+    int trackLower=0;
+    printf("Please enter user name \n");
+    scanf("%s", name);
+    printf("Please enter password need at least one letter \n" );
+    scanf("%s", password);
+    len = strlen(password);
+ 
+    
+    while (!(trackLower == 1 && trackUpper == 1)) {
+        for (int i=0; i < len; i++) {
+            if (isupper(password[i])) {
+                trackUpper = 1;
+       
+            }
+            if (islower(password[i])) {
+                trackLower = 1;
+               
+            }
+            
+        }
+        if (trackLower == 1 && trackUpper == 1) {
+            printf("password and username created successsfuly \n" );
+        } else {
+            printf("Please make sure password has at least one letter \n");
+            trackLower = 0;
+            trackUpper = 0;
+            scanf("%s", password);
+        }
+       
+    }
+    
+}
+
 //calculate car payment
 void calculatePayment(int creditScore, double downPayment, int month, double carPrice) {
     double interest=0;
