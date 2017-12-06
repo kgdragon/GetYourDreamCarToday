@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <ctype.h>
 #include <time.h>
@@ -16,18 +15,19 @@ struct CarInventory {
     
 };
 void signIn(char *password, char *name);
-void singUp(char *, char *);
+void signUp(char *, char *);
 void addCar(struct CarInventory *car);
 void calculatePayment(int creditScore, double downPayment, int month, double carPrice);
 
 int main() {
     
     int carID = 0;
-    char userName[32];
-    char password[32];
+    //username and password max size is 24
+    char userName[24];
+    char password[24];
     
-    singUp(&password, &userName);
-
+    signUp(&password, &userName);
+    
     
     signIn(&password, &userName);
     struct CarInventory car;
@@ -52,62 +52,103 @@ void addCar(struct CarInventory *car) {
     
 }
 
-//singIn
+//Sign In
 void signIn(char *password, char *name) {
-    printf("===================================\n");
+    printf("\n===================================\n");
     printf("Please Sign In!\n");
-    char name1[32];
-    char pass1[32];
+    char name1[24];
+    char pass1[24];
     printf("Username: \n");
     scanf("%s", name1);
-    printf("Password \n");
+    printf("Password: \n");
     scanf("%s", pass1);
     
     
-    if ((strcmp(name1,name)==0) && strcmp(password,pass1)==0) {
+    if ((strcmp(name1,name)==0) && strcmp(password, pass1)==0) {
         printf("Welcome: %s\n", name);
     } else {
-        printf("wrong password or username \n");
+        printf("Wrong password or username! \n");
         signIn(password, name);
     }
     
 }
 
-//SignUp
-void singUp(char *password, char *name) {
-    int len;
-    int trackUpper=0;
-    int trackLower=0;
-    printf("Please enter user name \n");
+//Sign Up
+void signUp(char *password, char *name) {
+    
+    printf("Please enter username: \n");
     scanf("%s", name);
-    printf("Please enter password need at least one letter \n" );
-    scanf("%s", password);
-    len = strlen(password);
- 
-    
-    while (!(trackLower == 1 && trackUpper == 1)) {
-        for (int i=0; i < len; i++) {
-            if (isupper(password[i])) {
-                trackUpper = 1;
-       
-            }
-            if (islower(password[i])) {
-                trackLower = 1;
-               
-            }
-            
+    //Declare variables
+    int i, trackDigits = 0, trackUpper = 0, trackLower = 0;
+    int count, trackCount=0;
+    /*loop until user enters a valid password */
+    while(1)
+    {
+        count = 0;
+        trackDigits = 0;
+        trackUpper = 0;
+        trackLower = 0;
+        trackCount = 0;
+        //Getting the password entered by the user
+        printf("\nEnter your password: \n");
+        scanf("%s", password);
+        /*Checking the length of the string is valid or not, if not, display error message*/
+        //Must be certain length (between 5 and 24)
+        if(strlen(password)<5){
+            printf("This password is too short.");
+            count++;
         }
-        if (trackLower == 1 && trackUpper == 1) {
-            printf("password and username created successsfuly \n" );
-        } else {
-            printf("Please make sure password has at least one letter \n");
-            trackLower = 0;
-            trackUpper = 0;
-            scanf("%s", password);
+        else if(strlen(password)>24){
+            printf("\n This password is too long.");
+            count++;
         }
-       
+        
+        //Checking whteher the password contains at least one digit or not
+        for(i=0; i<strlen(password); i++){
+            if(isdigit(password[i])){
+                trackDigits++;
+            }
+        }
+        if(trackDigits<1){
+            printf("\nThis password needs at least one digit.");
+            count++;
+        }
+        //Checking whether the password contains at least one uppercase letter or not
+        for(i=0; i<strlen(password);i++){
+            if(isupper(password[i])){
+                trackUpper++;
+            }
+        }
+        if(trackUpper<1){
+            printf("\nThis password needs an uppercase character.");
+            count++;
+        }
+        //Checking whether the password contains at least one lowercase letter or not
+        for(i=0; i <strlen(password); i++){
+            if(islower(password[i])){
+                trackLower++;
+            }
+        }
+        if(trackLower < 1){
+            printf("\nThis password needs a lowercase character.");
+            count++;
+        }
+        //Checks whether the password contains punctuation or not
+        for(i=0;i<strlen(password);i++){
+            if(ispunct(password[i])){
+                trackCount++;
+            }
+        }
+        if(trackCount<1){
+            printf("\nThis password needs at least one punctation character as well.");
+            count++;
+        }
+        
+        if(count==0){
+            printf("\nThe entered password is valid.");
+            break;
+        }
     }
-    
 }
 
 //calculate car payment
@@ -134,8 +175,8 @@ void calculatePayment(int creditScore, double downPayment, int month, double car
     
     printf("Your interest rate is %0.2lf percents\n", catchInterst);
     printf("Your monthly payment is %0.2lf dollars\n", monthlyPayment);
-  
-  
+    
+    
     
 }
 //check if use is qualified to get loan
@@ -155,23 +196,23 @@ int checkIfUserIsApprovedForLoan(int iD) {
     usleep(1000000);
     printf(".....\n");
     usleep(1000000);
-
-        if (creditScore >= arrayCredit[3]) {
-            printf("Fantastic, you have been approved for Execellent credit score\n");
-            userApproved = 1;
-        } else if (creditScore < arrayCredit[3] && creditScore >= arrayCredit[2]) {
-            printf("Fantastic, you have been approved for Great credit score\n");
-            userApproved = 1;
-        } else if (creditScore < arrayCredit[2] && creditScore >= arrayCredit[1]) {
-            printf("Fantastic, you have been approved for Average credit score\n");
-            userApproved = 1;
-        } else if (creditScore < arrayCredit[1] && creditScore >= arrayCredit[0]) {
-            printf("Fantastic, you have been approved for Minimum credit score\n");
-            userApproved = 1;
-        } else if (creditScore < arrayCredit[0]) {
-            printf("Sorry, You have not been approved for the loan\n");
-            userApproved = 0;
-        }
-
+    
+    if (creditScore >= arrayCredit[3]) {
+        printf("Fantastic, you have been approved for Execellent credit score\n");
+        userApproved = 1;
+    } else if (creditScore < arrayCredit[3] && creditScore >= arrayCredit[2]) {
+        printf("Fantastic, you have been approved for Great credit score\n");
+        userApproved = 1;
+    } else if (creditScore < arrayCredit[2] && creditScore >= arrayCredit[1]) {
+        printf("Fantastic, you have been approved for Average credit score\n");
+        userApproved = 1;
+    } else if (creditScore < arrayCredit[1] && creditScore >= arrayCredit[0]) {
+        printf("Fantastic, you have been approved for Minimum credit score\n");
+        userApproved = 1;
+    } else if (creditScore < arrayCredit[0]) {
+        printf("Sorry, You have not been approved for the loan\n");
+        userApproved = 0;
+    }
+    
     return userApproved;
 }
