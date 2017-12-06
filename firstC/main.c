@@ -35,9 +35,21 @@ int main()
     char password[32];
     
     
-    singUp(&password, &userName);
-    signIn(&password, &userName, &userSession);
+    int browsOrSignIn;
+    printf("press 1 if you want to brows the car without signup/in \n");
+    scanf("%d", &browsOrSignIn);
     
+    if (browsOrSignIn == 1)
+    {
+        // no sign in
+    }
+    else
+    {
+        singUp(&password, &userName);
+        signIn(&password, &userName, &userSession);
+    }
+
+
     FILE *cfPtr;//cfptr = CarInventory.txt file pointer
     
     if ((cfPtr = fopen("/Users/yanpengli/Google Drive/2017 Fall/--CS 49C/Hw/Project/CarInventory.txt", "r")) == NULL)
@@ -51,9 +63,9 @@ int main()
         char carColor[50];
         double price;
         
-//        printf("%-13s%-13s%-13s%s\n", "Maker", "Model", "Color", "price");
+        //        printf("%-13s%-13s%-13s%s\n", "Maker", "Model", "Color", "price");
         fscanf(cfPtr, "%49s%49s%49s%lf", carMaker, carModel, carColor, &price);
-//        printf("%-13s%-13s%-13s%7.2f\n", carMaker, carModel, carColor, price);
+        //        printf("%-13s%-13s%-13s%7.2f\n", carMaker, carModel, carColor, price);
         strcpy(cars[0].carMaker, carMaker);
         strcpy(cars[0].carModel, carModel);
         strcpy(cars[0].carColor, carColor);
@@ -63,25 +75,25 @@ int main()
         int i = 2;
         while(!feof(cfPtr))
         {
-                fscanf(cfPtr, "%49s%49s%49s%lf", carMaker, carModel, carColor, &price);
-//              printf("%-13s%-13s%-13s%7.2f\n", carMaker, carModel, carColor, price);
-                strcpy(cars[i-1].carMaker, carMaker);
-                strcpy(cars[i-1].carModel, carModel);
-                strcpy(cars[i-1].carColor, carColor);
-                cars[i-1].price = price;
-                cars[i-1].uID = i;
-                ++i;
+            fscanf(cfPtr, "%49s%49s%49s%lf", carMaker, carModel, carColor, &price);
+            //              printf("%-13s%-13s%-13s%7.2f\n", carMaker, carModel, carColor, price);
+            strcpy(cars[i-1].carMaker, carMaker);
+            strcpy(cars[i-1].carModel, carModel);
+            strcpy(cars[i-1].carColor, carColor);
+            cars[i-1].price = price;
+            cars[i-1].uID = i;
+            ++i;
         }
         fclose(cfPtr);
     }
-
+    
     printf("%-13s%-13s%-13s%-13s%-13s\n", "Maker", "Model", "Color", "price", "uID");
     for(int j = 0; j < 15; ++j)
     {
         printf("%-13s%-13s%-13s%7.2f%7d \n", cars[j].carMaker, cars[j].carModel, cars[j].carColor, cars[j].price, cars[j].uID);
     }
-
-    puts("Enter 1 for Makers, 2 for Models, 3 for colors, 4 for Prices Range, 5 for display the whole");
+    
+    puts("Enter 1 for Makers, 2 for colors, 3 for Prices Range, 4 for display the whole");
     int firstEnter;
     scanf("%d", &firstEnter);
     int thirdEnter = 0;
@@ -95,9 +107,7 @@ int main()
             printf("%-13s%-13s%-13s%-13s%-13s\n", "Maker", "Model", "Color", "price", "uID");
             for(int j = 0; j < 15; ++j)
             {
-                //char carMake[50] = {};
                 const char* str = "Toyota";
-                //strcpy(cars[j].carMaker, carMake);
                 if( strcmp("Toyota", cars[j].carMaker) == 0)
                 {
                     printf("%-13s%-13s%-13s%7.2f%7d \n", cars[j].carMaker, cars[j].carModel, cars[j].carColor, cars[j].price, cars[j].uID);
@@ -112,9 +122,6 @@ int main()
             printf("%-13s%-13s%-13s%-13s%-13s\n", "Maker", "Model", "Color", "price", "uID");
             for(int j = 0; j < 15; ++j)
             {
-                //char carMake[50] = {};
-                const char* str = "Toyota";
-                //strcpy(cars[j].carMaker, carMake);
                 if( strcmp("Subaru", cars[j].carMaker) == 0)
                 {
                     printf("%-13s%-13s%-13s%7.2f%7d \n", cars[j].carMaker, cars[j].carModel, cars[j].carColor, cars[j].price, cars[j].uID);
@@ -125,12 +132,187 @@ int main()
             save(cars[thirdEnter].carMaker, cars[thirdEnter].carModel, cars[thirdEnter].carColor, cars[thirdEnter].price, &storeSave, &userSession);
         }
     }
-
+    else if (firstEnter == 2)//2 for colors
+    {
+        puts("Enter 1 for White, 2 for Silver, 3 for Black, 4 for Blue, 5 for Red");
+        int secondEnter = 0;
+        scanf("%d", &secondEnter);
+        if(secondEnter == 1)//Enter 1 for White
+        {
+            printf("%-13s%-13s%-13s%-13s%-13s\n", "Maker", "Model", "Color", "price", "uID");
+            for(int j = 0; j < 15; ++j)
+            {
+                if( strcmp("White", cars[j].carColor) == 0)
+                {
+                    printf("%-13s%-13s%-13s%7.2f%7d \n", cars[j].carMaker, cars[j].carModel, cars[j].carColor, cars[j].price, cars[j].uID);
+                }
+            }
+            scanf("%d", &thirdEnter);
+            printf("You have selected # %d.\n", thirdEnter);
+            save(cars[thirdEnter].carMaker, cars[thirdEnter].carModel, cars[thirdEnter].carColor, cars[thirdEnter].price, &storeSave, &userSession);
+        }
+        else if (secondEnter == 2)//2 for Silver
+        {
+            printf("%-13s%-13s%-13s%-13s%-13s\n", "Maker", "Model", "Color", "price", "uID");
+            for(int j = 0; j < 15; ++j)
+            {
+                if( strcmp("Silver", cars[j].carColor) == 0)
+                {
+                    printf("%-13s%-13s%-13s%7.2f%7d \n", cars[j].carMaker, cars[j].carModel, cars[j].carColor, cars[j].price, cars[j].uID);
+                }
+            }
+            scanf("%d", &thirdEnter);
+            printf("You have selected # %d.\n", thirdEnter);
+            save(cars[thirdEnter].carMaker, cars[thirdEnter].carModel, cars[thirdEnter].carColor, cars[thirdEnter].price, &storeSave, &userSession);
+        }
+        else if (secondEnter == 3)//3 for Black
+        {
+            printf("%-13s%-13s%-13s%-13s%-13s\n", "Maker", "Model", "Color", "price", "uID");
+            for(int j = 0; j < 15; ++j)
+            {
+                if( strcmp("Black", cars[j].carColor) == 0)
+                {
+                    printf("%-13s%-13s%-13s%7.2f%7d \n", cars[j].carMaker, cars[j].carModel, cars[j].carColor, cars[j].price, cars[j].uID);
+                }
+            }
+            scanf("%d", &thirdEnter);
+            printf("You have selected # %d.\n", thirdEnter);
+            save(cars[thirdEnter].carMaker, cars[thirdEnter].carModel, cars[thirdEnter].carColor, cars[thirdEnter].price, &storeSave, &userSession);
+        }
+        else if (secondEnter == 4)//4 for Blue
+        {
+            printf("%-13s%-13s%-13s%-13s%-13s\n", "Maker", "Model", "Color", "price", "uID");
+            for(int j = 0; j < 15; ++j)
+            {
+                if( strcmp("Blue", cars[j].carColor) == 0)
+                {
+                    printf("%-13s%-13s%-13s%7.2f%7d \n", cars[j].carMaker, cars[j].carModel, cars[j].carColor, cars[j].price, cars[j].uID);
+                }
+            }
+            scanf("%d", &thirdEnter);
+            printf("You have selected # %d.\n", thirdEnter);
+            save(cars[thirdEnter].carMaker, cars[thirdEnter].carModel, cars[thirdEnter].carColor, cars[thirdEnter].price, &storeSave, &userSession);
+        }
+        else//5 for Red
+        {
+            printf("%-13s%-13s%-13s%-13s%-13s\n", "Maker", "Model", "Color", "price", "uID");
+            for(int j = 0; j < 15; ++j)
+            {
+                if( strcmp("Red", cars[j].carColor) == 0)
+                {
+                    printf("%-13s%-13s%-13s%7.2f%7d \n", cars[j].carMaker, cars[j].carModel, cars[j].carColor, cars[j].price, cars[j].uID);
+                }
+            }
+            scanf("%d", &thirdEnter);
+            printf("You have selected # %d.\n", thirdEnter);
+            save(cars[thirdEnter].carMaker, cars[thirdEnter].carModel, cars[thirdEnter].carColor, cars[thirdEnter].price, &storeSave, &userSession);
+        }
+    }
+    else if (firstEnter == 3)//3 for Prices Range
+    {
+        puts("Please Enter your price range, for example, enter 33000 means under 33000");
+        double secondEnter = 0;
+        scanf("%lf", &secondEnter);
+        if(secondEnter < 20000)
+        {
+            printf("%-13s%-13s%-13s%-13s%-13s\n", "Maker", "Model", "Color", "price", "uID");
+            for(int j = 0; j < 15; ++j)
+            {
+                if( cars[j].price <= 20000)
+                {
+                    printf("%-13s%-13s%-13s%7.2f%7d \n", cars[j].carMaker, cars[j].carModel, cars[j].carColor, cars[j].price, cars[j].uID);
+                }
+            }
+            scanf("%d", &thirdEnter);
+            printf("You have selected # %d.\n", thirdEnter);
+            save(cars[thirdEnter].carMaker, cars[thirdEnter].carModel, cars[thirdEnter].carColor, cars[thirdEnter].price, &storeSave, &userSession);
+        }
+        else if(secondEnter <= 25000)
+        {
+            printf("%-13s%-13s%-13s%-13s%-13s\n", "Maker", "Model", "Color", "price", "uID");
+            for(int j = 0; j < 15; ++j)
+            {
+                if( cars[j].price <= 25000)
+                {
+                    printf("%-13s%-13s%-13s%7.2f%7d \n", cars[j].carMaker, cars[j].carModel, cars[j].carColor, cars[j].price, cars[j].uID);
+                }
+            }
+            scanf("%d", &thirdEnter);
+            printf("You have selected # %d.\n", thirdEnter);
+            save(cars[thirdEnter].carMaker, cars[thirdEnter].carModel, cars[thirdEnter].carColor, cars[thirdEnter].price, &storeSave, &userSession);
+        }
+        else if(secondEnter <= 30000)
+        {
+            printf("%-13s%-13s%-13s%-13s%-13s\n", "Maker", "Model", "Color", "price", "uID");
+            for(int j = 0; j < 15; ++j)
+            {
+                if( cars[j].price <= 30000)
+                {
+                    printf("%-13s%-13s%-13s%7.2f%7d \n", cars[j].carMaker, cars[j].carModel, cars[j].carColor, cars[j].price, cars[j].uID);
+                }
+            }
+            scanf("%d", &thirdEnter);
+            printf("You have selected # %d.\n", thirdEnter);
+            save(cars[thirdEnter].carMaker, cars[thirdEnter].carModel, cars[thirdEnter].carColor, cars[thirdEnter].price, &storeSave, &userSession);
+        }
+        else if(secondEnter <= 35000)
+        {
+            printf("%-13s%-13s%-13s%-13s%-13s\n", "Maker", "Model", "Color", "price", "uID");
+            for(int j = 0; j < 15; ++j)
+            {
+                if( cars[j].price <= 35000)
+                {
+                    printf("%-13s%-13s%-13s%7.2f%7d \n", cars[j].carMaker, cars[j].carModel, cars[j].carColor, cars[j].price, cars[j].uID);
+                }
+            }
+            scanf("%d", &thirdEnter);
+            printf("You have selected # %d.\n", thirdEnter);
+            save(cars[thirdEnter].carMaker, cars[thirdEnter].carModel, cars[thirdEnter].carColor, cars[thirdEnter].price, &storeSave, &userSession);
+        }
+        else if (secondEnter <= 40000)
+        {
+            printf("%-13s%-13s%-13s%-13s%-13s\n", "Maker", "Model", "Color", "price", "uID");
+            for(int j = 0; j < 15; ++j)
+            {
+                if( cars[j].price <= 40000)
+                {
+                    printf("%-13s%-13s%-13s%7.2f%7d \n", cars[j].carMaker, cars[j].carModel, cars[j].carColor, cars[j].price, cars[j].uID);
+                }
+            }
+            scanf("%d", &thirdEnter);
+            printf("You have selected # %d.\n", thirdEnter);
+            save(cars[thirdEnter].carMaker, cars[thirdEnter].carModel, cars[thirdEnter].carColor, cars[thirdEnter].price, &storeSave, &userSession);
+        }
+        else
+        {
+            printf("%-13s%-13s%-13s%-13s%-13s\n", "Maker", "Model", "Color", "price", "uID");
+            for(int j = 0; j < 15; ++j)
+            {
+                if( cars[j].price <= 50000)
+                {
+                    printf("%-13s%-13s%-13s%7.2f%7d \n", cars[j].carMaker, cars[j].carModel, cars[j].carColor, cars[j].price, cars[j].uID);
+                }
+            }
+            scanf("%d", &thirdEnter);
+            printf("You have selected # %d.\n", thirdEnter);
+            save(cars[thirdEnter].carMaker, cars[thirdEnter].carModel, cars[thirdEnter].carColor, cars[thirdEnter].price, &storeSave, &userSession);
+        }
+        
+    }
+    else//4 for display the car inventory
+    {
+        printf("%-13s%-13s%-13s%-13s%-13s\n", "Maker", "Model", "Color", "price", "uID");
+        for(int j = 0; j < 15; ++j)
+        {
+            printf("%-13s%-13s%-13s%7.2f%7d \n", cars[j].carMaker, cars[j].carModel, cars[j].carColor, cars[j].price, cars[j].uID);
+        }
+    }
+    
     
     puts("Please enter your credit Score");
     int creditScore;
     scanf("%d", &creditScore);
-
+    
     
     if (checkIfUserIsApprovedForLoan(creditScore) == 1) {
         printf("Now we estimate your monthly payments on your new car.\n");
@@ -218,7 +400,7 @@ int checkIfUserIsApprovedForLoan(int creditScore) {
 
 //saveFunction and displySave
 void save(char carMake[], char carModel[], char carColor[], double price, char *saveItem, int *userSession) {
-   
+    
     char bufferPrice[32];
     gcvt(price,10,bufferPrice);
     
